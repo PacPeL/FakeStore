@@ -17,5 +17,28 @@ body {
   background: radial-gradient(1200px 600px at 20% -20%, #1f2937, transparent), var(--bg);
 }
 
+/* Selector de idioma fijo en login/register */
+.lang-switcher-fixed {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+  z-index: 9999;
+}
+
+.lang-btn {
+  background: rgba(255,255,255,0.1);
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+.lang-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
 @import './pages/login';
 @import './components/lang-switcher';
