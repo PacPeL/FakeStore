@@ -1,61 +1,70 @@
-// app/src/app/pages/Login.jsx
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/pages/_login.scss";
 
-export default function Login() {
-  const setLang = (lang) => {
-    localStorage.setItem("lang", lang);
-    window.location.reload();
+const Login = () => {
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState({
+    email: "",
+    password: ""
+  });
+
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!form.email || !form.password) {
+      return setError("Todos los campos son obligatorios.");
+    }
+
+    // 🔥 Fake login
+    if (form.email === "admin@fake.com" && form.password === "1234") {
+      localStorage.setItem("user", JSON.stringify(form));
+      navigate("/");
+    } else {
+      setError("Credenciales incorrectas.");
+    }
   };
 
   return (
-    <>
-      {/* Selector de idioma */}
-      <div className="lang-switcher-fixed">
-        <button className="lang-btn" onClick={() => setLang("pt")}>PT</button>
-        <button className="lang-btn" onClick={() => setLang("es")}>ES</button>
-        <button className="lang-btn" onClick={() => setLang("en")}>EN</button>
+    <div className="login">
+      <div className="login__card">
+        <h2>FakeStore</h2>
+        <p>Inicia sesión para continuar</p>
+
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            name="email"
+            placeholder="Correo"
+            value={form.email}
+            onChange={handleChange}
+          />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            value={form.password}
+            onChange={handleChange}
+          />
+
+          {error && <span className="login__error">{error}</span>}
+
+          <button type="submit">Ingresar</button>
+        </form>
       </div>
-
-      <section className="auth-page">
-        <div className="auth-container">
-          <h1 className="auth-title">Iniciar sesión</h1>
-          <p className="auth-subtitle">Bienvenido nuevamente</p>
-
-          <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
-            <label className="form-group">
-              <span className="form-label">Correo electrónico</span>
-              <input
-                type="email"
-                className="form-input"
-                placeholder="correo@ejemplo.com"
-                required
-              />
-            </label>
-
-            <label className="form-group">
-              <span className="form-label">Contraseña</span>
-              <input
-                type="password"
-                className="form-input"
-                placeholder="••••••••"
-                required
-                minLength={6}
-              />
-            </label>
-
-            <button className="btn-primary" type="submit">
-              Entrar
-            </button>
-          </form>
-
-          <div className="auth-footer">
-            <span>¿No tienes cuenta?</span>{" "}
-            <Link to="/register" className="auth-link">
-              Regístrate
-            </Link>
-          </div>
-        </div>
-      </section>
-    </>
+    </div>
   );
-}
+};
+
+export default Login;
