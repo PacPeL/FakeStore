@@ -1,6 +1,7 @@
 // app/src/app/pages/Home.jsx
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import "../services/cartService";
 import "../styles/pages/_home.scss";
 
 const LS_PRODUCTS_KEY = "products";
