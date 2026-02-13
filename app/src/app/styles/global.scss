@@ -1,44 +1,69 @@
+/* app/src/styles/globals.scss */
+
 :root {
-  --bg: #0f172a;
-  --card: #111827;
-  --text: #e5e7eb;
-  --muted: #9ca3af;
-  --primary: #2563eb;
-  --danger: #ef4444;
+  /* Ajusta si tu topbar mide más */
+  --header-height: 56px;
+
+  /* Tipografía calmada */
+  --ui-font: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Brand blue (fácil de cambiar) */
+  --blue-950: #070b13;
+  --blue-900: #0b1220;
+  --blue-800: #0f1b35;
+  --blue-700: #102a56;
+  --blue-600: #1d4ed8;
+  --blue-500: #2563eb;
+  --blue-400: #60a5fa;
+
+  --green: #34d399;
+  --yellow: #fbbf24;
+  --red: #ef4444;
+
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.72);
+
+  --stroke: rgba(255, 255, 255, 0.10);
+  --stroke2: rgba(255, 255, 255, 0.08);
+
+  /* Gradientes */
+  --brand-grad: linear-gradient(135deg, var(--blue-700), var(--blue-500));
+  --app-bg: radial-gradient(900px 500px at 30% -10%, rgba(96,165,250,0.35), transparent),
+            radial-gradient(700px 500px at 80% 0%, rgba(37,99,235,0.25), transparent),
+            linear-gradient(180deg, var(--blue-900), var(--blue-950));
 }
 
-* { box-sizing: border-box; }
-html, body, #root { height: 100%; }
+/* ✅ Evita blancos: root/viewport siempre ocupados */
+html, body, #root {
+  height: 100%;
+}
 
 body {
   margin: 0;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  min-height: 100vh;
+  font-family: var(--ui-font);
   color: var(--text);
-  background: radial-gradient(1200px 600px at 20% -20%, #1f2937, transparent), var(--bg);
+  background: var(--app-bg);
+  background-attachment: fixed;
 }
 
-/* Selector de idioma fijo en login/register */
-.lang-switcher-fixed {
-  position: fixed;
-  top: 12px;
-  right: 12px;
-  display: flex;
-  gap: 8px;
-  z-index: 9999;
+/* ✅ Scrollbar azul oscuro */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
 }
-
-.lang-btn {
-  background: rgba(255,255,255,0.1);
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.2);
-  color: white;
-  cursor: pointer;
-  font-weight: 600;
+*::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
 }
-.lang-btn:hover {
-  background: rgba(255,255,255,0.2);
+*::-webkit-scrollbar-thumb {
+  background: rgba(29, 78, 216, 0.55);
+  border-radius: 999px;
+  border: 2px solid rgba(0,0,0,0.22);
 }
-
-@import './pages/login';
-@import './components/lang-switcher';
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(29, 78, 216, 0.75);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(29, 78, 216, 0.65) rgba(255,255,255,0.06);
+}

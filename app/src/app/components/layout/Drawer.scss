@@ -1,96 +1,140 @@
-/* Drawer.scss */
+/* app/src/components/.../Drawer.scss
+   Adaptado al estilo azul/gradiente + variables globales (globals.scss)
+*/
 
+/* Si quieres mantener variables locales: */
 $drawer-width: 13.2rem;
-$drawer-bg: #111;
-$overlay-bg: rgba(0, 0, 0, 0.55);
 $transition: 0.25s ease;
 
 .drawer {
   position: fixed;
   top: 0;
   left: 0;
+
   height: 100vh;
   width: $drawer-width;
   max-width: 88vw;
 
-  background: $drawer-bg;
-  color: #fff;
+  /* ✅ look & feel consistente */
+  background: linear-gradient(180deg, rgba(15, 27, 53, 0.92), rgba(11, 18, 32, 0.95));
+  color: var(--text, rgba(255, 255, 255, 0.92));
 
-  padding: 20px;
+  border-right: 1px solid var(--stroke, rgba(255, 255, 255, 0.10));
+  backdrop-filter: blur(10px);
+
+  padding: 16px;
   transform: translateX(-100%);
   transition: transform $transition;
-  z-index: 1450; /* ✅ arriba del overlay y del header */
 
-  /* ✅ IMPORTANTE: sin sombra cuando está cerrado */
+  z-index: 1450;
+
+  /* ✅ sin sombra cuando está cerrado */
   box-shadow: none;
 
   &.open {
     transform: translateX(0);
-    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.35); /* ✅ sombra solo abierto */
+
+    /* ✅ sombra solo cuando abre */
+    box-shadow: 18px 0 50px rgba(0, 0, 0, 0.40);
   }
 
   .logo {
     margin: 0;
-    font-weight: 900;
+    font-weight: 1000;
     letter-spacing: 0.4px;
     font-size: 18px;
+    color: rgba(255, 255, 255, 0.95);
   }
 
-  nav a {
-    display: block;
-    margin: 14px 0;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 800;
-    padding: 10px 12px;
-    border-radius: 12px;
+  nav {
+    margin-top: 14px;
 
-    &:hover {
-      background: rgba(255, 255, 255, 0.08);
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin: 10px 0;
+      padding: 10px 12px;
+
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 900;
+
+      color: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+
+      &:hover {
+        background: rgba(96, 165, 250, 0.12); /* blue hover */
+        border-color: rgba(96, 165, 250, 0.25);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0px) scale(0.99);
+      }
     }
   }
 }
 
+/* Header del drawer */
 .drawer__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 22px;
+  margin-bottom: 12px;
 }
 
+/* Botón cerrar */
 .drawer__close {
-  border: none;
-  background: #111;
-  color: #fff;
-  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.95);
+
+  border-radius: 12px;
   padding: 8px 10px;
   cursor: pointer;
-  font-weight: 900;
-  transition: all 0.2s ease;
+  font-weight: 1000;
+
+  transition: transform 0.18s ease, background 0.18s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.16);
-      transform: scale(1.05);
+    background: rgba(96, 165, 250, 0.14);
+    transform: scale(1.04);
   }
-  &:active{
-      transform: scale(0.85);
+
+  &:active {
+    transform: scale(0.96);
   }
 }
 
-/* Overlay: arriba del header */
+/* Overlay (mismo estilo que Home: blur + oscuro) */
 .overlay {
   position: fixed;
   inset: 0;
-  background: $overlay-bg;
+
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+
   opacity: 0;
   pointer-events: none;
+
   transition: opacity $transition;
-  z-index: 1400; /* ✅ arriba del header (tu header z=1300) */
-  backdrop-filter: blur(2px);
+  z-index: 1400; /* debajo del drawer, encima del header */
+
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
 }
 
-.overlay.active {
-  opacity: 1;
-  pointer-events: all;
+/* Opcional: si quieres que el drawer sea un poquito más ancho en desktop */
+@media (min-width: 1024px) {
+  .drawer {
+    width: 16rem;
+  }
 }
