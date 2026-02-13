@@ -68,7 +68,7 @@ const Drawer = () => {
       {/* drawer */}
       <aside className={`drawer ${isOpen ? "open" : ""}`} aria-hidden={!isOpen}>
         <div className="drawer__header">
-          <h2 className="logo">FakeStore</h2>
+          <h2 className="logo"></h2>
 
           {/* Botón cerrar dentro del drawer (siempre visible cuando está abierto) */}
           <button
