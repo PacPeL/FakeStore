@@ -1,0 +1,157 @@
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1300;
+  background: var(--primary-color);
+  color: var(--light-text);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px;
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__menuHint {
+    display: none;
+    border: none;
+    background: transparent;
+    color: var(--light-text);
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  &__logo {
+    color: var(--light-text);
+    text-decoration: none;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    font-size: 18px;
+  }
+
+  &__search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0;
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border: none;
+      outline: none;
+      border-radius: 10px 0 0 10px;
+    }
+
+    button {
+      padding: 10px 14px;
+      border: none;
+      cursor: pointer;
+      background: var(--accent-color);
+      font-weight: 800;
+      border-radius: 0 10px 10px 0;
+    }
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__iconBtn {
+    position: relative;
+    color: var(--light-text);
+    text-decoration: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 8px 10px;
+    border-radius: 10px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  &__badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: var(--accent-color);
+    color: #111;
+    font-weight: 900;
+    border-radius: 999px;
+    padding: 2px 7px;
+    font-size: 12px;
+    line-height: 1;
+  }
+
+  &__dot {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--accent-color);
+    display: none; // luego lo activamos cuando haya notificaciones reales
+  }
+
+  &__signin {
+    color: var(--light-text);
+    text-decoration: none;
+    font-weight: 800;
+    padding: 8px 10px;
+    border-radius: 10px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  &__profile {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: flex-end;
+    font-size: 12px;
+  }
+
+  &__email {
+    opacity: 0.9;
+  }
+
+  &__logout {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--accent-color);
+    font-weight: 900;
+    padding: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    gap: 10px;
+
+    &__menuHint {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__search button {
+      display: none;
+    }
+
+    &__profile .topbar__email {
+      display: none;
+    }
+  }
+}
