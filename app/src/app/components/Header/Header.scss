@@ -155,3 +155,28 @@
     }
   }
 }
+
+@media (min-width: 768px) {
+  .topbar {
+    margin-left: 17rem;           // mismo ancho del drawer
+    width: calc(100% - 21rem);    // para que no se salga del viewport
+  }
+}
+
+@media (max-width: 768px) {
+  .topbar__menuHint {
+    display: inline-flex;
+  }
+}
+
+.topbar__menuHint {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .topbar__menuHint {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

@@ -10,7 +10,7 @@ const Drawer = () => {
   const toggleDrawer = () => setIsOpen((v) => !v);
   const closeDrawer = () => setIsOpen(false);
 
-  // ✅ actualizar contador del carrito (misma pestaña + otras)
+
   useEffect(() => {
     const updateCart = () => {
       const cart = loadCart();
@@ -65,7 +65,7 @@ const Drawer = () => {
           </Link>
 
           <Link to="/cart" onClick={closeDrawer}>
-            🛒 Cart ({cartCount})
+            Cart ({cartCount})
           </Link>
 
           <Link to="/profile" onClick={closeDrawer}>

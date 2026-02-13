@@ -9,7 +9,13 @@
   --text-color: #111;
   --light-text: #ffffff;
   --border-color: #ddd;
+  
 }
+
+:root {
+  --drawer-width: 12rem;
+}
+
 
 [data-theme="dark"] {
   --primary-color: #0f1111;

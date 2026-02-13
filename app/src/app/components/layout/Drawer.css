@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   height: 100%;
-  width: 250px;
+  width: 13.2rem;
   background: #111;
   color: white;
   padding: 20px;
@@ -113,5 +113,12 @@
 @media (min-width: 768px) {
   .content {
     margin-left: 250px;
+  }
+}
+
+/* ✅ Ocultar el botón del drawer en móvil (usaremos el del Header) */
+@media (max-width: 768px) {
+  .menu-btn {
+    display: none;
   }
 }
