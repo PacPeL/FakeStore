@@ -1,0 +1,91 @@
+/* Drawer.scss */
+
+$drawer-width: 13.2rem;
+$drawer-bg: #111;
+$overlay-bg: rgba(0, 0, 0, 0.55);
+$transition: 0.25s ease;
+
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: $drawer-width;
+  max-width: 88vw;
+
+  background: $drawer-bg;
+  color: #fff;
+
+  padding: 20px;
+  transform: translateX(-100%);
+  transition: transform $transition;
+  z-index: 1450; /* ✅ arriba del overlay y del header */
+
+  /* ✅ IMPORTANTE: sin sombra cuando está cerrado */
+  box-shadow: none;
+
+  &.open {
+    transform: translateX(0);
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.35); /* ✅ sombra solo abierto */
+  }
+
+  .logo {
+    margin: 0;
+    font-weight: 900;
+    letter-spacing: 0.4px;
+    font-size: 18px;
+  }
+
+  nav a {
+    display: block;
+    margin: 14px 0;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 800;
+    padding: 10px 12px;
+    border-radius: 12px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+}
+
+.drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.drawer__close {
+  border: none;
+  background: rgba(255, 255, 255, 0.10);
+  color: #fff;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-weight: 900;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.16);
+  }
+}
+
+/* Overlay: arriba del header */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: $overlay-bg;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity $transition;
+  z-index: 1400; /* ✅ arriba del header (tu header z=1300) */
+  backdrop-filter: blur(2px);
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}

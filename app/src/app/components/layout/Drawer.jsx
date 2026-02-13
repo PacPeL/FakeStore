@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { loadCart, getCartCount } from "../../services/cartService";
-import "./Drawer.css";
+import "./Drawer.scss";
 
 const Drawer = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +10,7 @@ const Drawer = () => {
   const toggleDrawer = () => setIsOpen((v) => !v);
   const closeDrawer = () => setIsOpen(false);
 
-
+  // Cart count sync
   useEffect(() => {
     const updateCart = () => {
       const cart = loadCart();
@@ -18,9 +18,8 @@ const Drawer = () => {
     };
 
     updateCart();
-
-    window.addEventListener("cart_updated", updateCart); // misma pestaña
-    window.addEventListener("storage", updateCart); // otras pestañas
+    window.addEventListener("cart_updated", updateCart);
+    window.addEventListener("storage", updateCart);
 
     return () => {
       window.removeEventListener("cart_updated", updateCart);
@@ -28,55 +27,75 @@ const Drawer = () => {
     };
   }, []);
 
-  // ✅ permitir que el Header controle el drawer
+  // Header controla el drawer
   useEffect(() => {
     window.addEventListener("drawer_toggle", toggleDrawer);
     return () => window.removeEventListener("drawer_toggle", toggleDrawer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // ESC cierra
+  useEffect(() => {
+    const onKeyDown = (e) => e.key === "Escape" && closeDrawer();
+    if (isOpen) document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [isOpen]);
+
+  // ✅ Cuando abre: bloquea scroll + avisa estado al Header + clase global
+  useEffect(() => {
+    document.body.classList.toggle("drawer-open", isOpen);
+    document.body.style.overflow = isOpen ? "hidden" : "";
+
+    window.dispatchEvent(
+      new CustomEvent("drawer_state", { detail: { open: isOpen } })
+    );
+
+    return () => {
+      document.body.classList.remove("drawer-open");
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   return (
     <>
-      {/* botón hamburguesa (móvil) */}
-      <button
-        className={`menu-btn ${isOpen ? "open" : ""}`}
-        onClick={toggleDrawer}
-        type="button"
-        aria-label="Open menu"
-      >
-        <span />
-        <span />
-        <span />
-      </button>
-
       {/* overlay */}
       <div
         className={`overlay ${isOpen ? "active" : ""}`}
         onClick={closeDrawer}
+        aria-hidden={!isOpen}
       />
 
       {/* drawer */}
-      <div className={`drawer ${isOpen ? "open" : ""}`}>
-        <h2 className="logo">FakeStore</h2>
+      <aside className={`drawer ${isOpen ? "open" : ""}`} aria-hidden={!isOpen}>
+        <div className="drawer__header">
+          <h2 className="logo">FakeStore</h2>
+
+          {/* Botón cerrar dentro del drawer (siempre visible cuando está abierto) */}
+          <button
+            className="drawer__close"
+            onClick={closeDrawer}
+            type="button"
+            aria-label="Close menu"
+          >
+            ✕
+          </button>
+        </div>
 
         <nav>
-          <Link to="/" onClick={closeDrawer}>
-            Home
-          </Link>
+          <Link to="/" onClick={closeDrawer}>Home</Link>
 
           <Link to="/cart" onClick={closeDrawer}>
-            Cart ({cartCount})
+            Cart {cartCount > 0 ? `(${cartCount})` : ""}
           </Link>
 
-          <Link to="/profile" onClick={closeDrawer}>
-            Profile
-          </Link>
+          <Link to="/profile" onClick={closeDrawer}>Profile</Link>
 
-          <Link to="/admin" onClick={closeDrawer}>
-            Admin
-          </Link>
+          {/* Settings lo agregamos después cuando lo pidas */}
+          {/* <Link to="/settings" onClick={closeDrawer}>Settings</Link> */}
+
+          <Link to="/admin" onClick={closeDrawer}>Admin</Link>
         </nav>
-      </div>
+      </aside>
     </>
   );
 };

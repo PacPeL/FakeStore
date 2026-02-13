@@ -51,7 +51,7 @@ const Home = () => {
     <div className="home">
       <div className="home__topRow">
         <h1 className="home__title">Products</h1>
-        <div className="home__cartMini"><span>{cartCount}</span>
+        <div className="home__cartMini"><span></span>
         </div>
       </div>
 
